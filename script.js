@@ -1,55 +1,65 @@
-const rooms = [
-    { roomNo: 1, student: "Rahul" },
-    { roomNo: 2, student: "Arjun" },
-    { roomNo: 3, student: "Nikhil" },
-    { roomNo: 4, student: "Faizal" },
-    { roomNo: 5, student: "Sandeep" },
-    { roomNo: 6, student: "Akhil" },
-    { roomNo: 7, student: "Vishnu" },
-    { roomNo: 8, student: "Adithya" },
-    { roomNo: 9, student: "Rohit" },
-    { roomNo: 10, student: "Manu" }
-];
+var rooms = [];
+var div = document.getElementById("rooms");
 
-const roomContainer = document.getElementById("roomContainer");
-
-function displayRooms() {
-    roomContainer.innerHTML = "";
-
-    rooms.forEach(room => {
-        const roomDiv = document.createElement("div");
-        roomDiv.classList.add("room");
-        roomDiv.id = "room-" + room.roomNo;
-
-        roomDiv.innerHTML = `
-            <h3>Room ${room.roomNo}</h3>
-            <p>${room.student ? room.student : "<span class='empty'>Empty</span>"}</p>
-        `;
-
-        roomContainer.appendChild(roomDiv);
-    });
+// Create 10 rooms with 2 beds
+for (var i = 1; i <= 10; i++) {
+    rooms[i] = {bed1: "", bed2: ""};
 }
 
-function searchStudent() {
-    const searchValue = document.getElementById("searchInput").value.toLowerCase();
+// Display rooms
+function showRooms() {
+    div.innerHTML = "";
 
-    // Remove previous highlight
-    document.querySelectorAll(".room").forEach(room => {
-        room.classList.remove("highlight");
-    });
+    for (var i = 1; i <= 10; i++) {
 
-    let found = false;
+        var available = 0;
+        if (rooms[i].bed1 == "") available++;
+        if (rooms[i].bed2 == "") available++;
 
-    rooms.forEach(room => {
-        if (room.student.toLowerCase() === searchValue) {
-            document.getElementById("room-" + room.roomNo).classList.add("highlight");
-            found = true;
-        }
-    });
-
-    if (!found) {
-        alert("Student not found!");
+        div.innerHTML +=
+            "<div class='room' id='room"+i+"'>" +
+            "<h4>Room " + i + "</h4>" +
+            "Bed1: " + (rooms[i].bed1 || "Empty") + "<br>" +
+            "Bed2: " + (rooms[i].bed2 || "Empty") + "<br>" +
+            "Available Beds: " + available + "<br>" +
+            "<button onclick='vacate("+i+",1)'>Vacate Bed1</button>" +
+            "<button onclick='vacate("+i+",2)'>Vacate Bed2</button>" +
+            "</div>";
     }
 }
 
-displayRooms();
+function allocate() {
+    var name = document.getElementById("name").value;
+    var room = document.getElementById("room").value;
+    var bed = document.getElementById("bed").value;
+
+    if (rooms[room]["bed"+bed] == "") {
+        rooms[room]["bed"+bed] = name;
+    } else {
+        alert("Bed already occupied!");
+    }
+
+    showRooms();
+}
+
+function vacate(room, bed) {
+    rooms[room]["bed"+bed] = "";
+    showRooms();
+}
+
+function search() {
+    var name = document.getElementById("name").value;
+
+    // remove old highlights
+    for (var i = 1; i <= 10; i++) {
+        document.getElementById("room"+i).classList.remove("highlight");
+    }
+
+    for (var i = 1; i <= 10; i++) {
+        if (rooms[i].bed1 == name || rooms[i].bed2 == name) {
+            document.getElementById("room"+i).classList.add("highlight");
+        }
+    }
+}
+
+showRooms();
