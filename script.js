@@ -50,16 +50,17 @@ function vacate(room, bed) {
 function search() {
     var name = document.getElementById("name").value;
 
-    // remove old highlights
+    // Remove highlight from all rooms first
     for (var i = 1; i <= 10; i++) {
         document.getElementById("room"+i).classList.remove("highlight");
     }
 
+    // Find and highlight ONLY one room
     for (var i = 1; i <= 10; i++) {
         if (rooms[i].bed1 == name || rooms[i].bed2 == name) {
             document.getElementById("room"+i).classList.add("highlight");
+            break;   // stops after first match
         }
     }
 }
-
 showRooms();
