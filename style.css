@@ -4,6 +4,7 @@ body {
 }
 
 .room {
+    background-color: lightblue;
     border: 1px solid black;
     width: 150px;
     display: inline-block;
