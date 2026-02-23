@@ -1,25 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Hostel / PG Management</title>
+    <title>Hostel Management</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <header>
-        <h1>Hostel / PG Management System</h1>
-    </header>
+<h2>Hostel Rooms</h2>
 
-    <section class="search-section">
-        <input type="text" id="searchInput" placeholder="Search student name">
-        <button onclick="searchStudent()">Search</button>
-    </section>
+<input type="text" id="name" placeholder="Student name">
+<input type="number" id="room" placeholder="Room no (1-10)">
+<input type="number" id="bed" placeholder="Bed (1 or 2)">
+<button onclick="allocate()">Allocate</button>
+<button onclick="search()">Search</button>
 
-    <section class="room-container" id="roomContainer">
-        <!-- Rooms will be generated here -->
-    </section>
+<div id="rooms"></div>
 
-    <script src="script.js"></script>
+<script src="script.js"></script>
 </body>
 </html>
